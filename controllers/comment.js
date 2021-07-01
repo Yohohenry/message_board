@@ -17,7 +17,10 @@ const commentController = {
 	}, 
 	index: (req, res) => {
 		Comment.findAll({
-			include: User
+			include: User,
+			order: [
+			['createdAt', 'DESC']
+			]
 		}).then(comments => {
 			res.render('index', {
 				comments
