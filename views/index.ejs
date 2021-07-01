@@ -1,0 +1,31 @@
+<!doctype html>
+<head>
+	<%- include('template/head') %>
+</head>
+<html>
+	<%- include('template/navbar') %>
+	<div class="container">
+	<% if(username) { %>
+		<form method="POST" action="/comments">
+		  <div class="mb-3">
+		    <label class="form-label">留言內容</label>
+		    <textarea name="content" class="form-control"></textarea>
+		  </div>
+		  <button type="submit" class="btn btn-primary">送出留言</button>
+		</form>
+	<% } %>
+
+	<% comments.forEach(function(comment) { %>
+		<div class="card" style="width: 18rem; margin-top: 10px">
+		  <div class="card-body">
+		    <h5 class="card-title"><%= comment.User.nickname %></h5>
+		    <p class="card-text"><%= comment.content %></p>
+		    <% if(username === comment.User.username) { %>
+			  <a href="update_comments/<%= comment.id %>" class="card-link">編輯</a>
+			  <a href="delete_comments/<%= comment.id %>" class="card-link">刪除</a>
+			<% } %>
+		  </div>
+		</div>
+	<% }) %>
+	</div>
+</html>

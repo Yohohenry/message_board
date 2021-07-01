@@ -1,0 +1,8 @@
+<h1>Todos!</h1>
+<a href="/">add todo</a>
+<ul>
+<% for(let i=0; i<todos.length; i++) { %>
+	<li><%= todos[i].id + ': ' + todos[i].content %></li>
+<% } %>	
+</ul>
+

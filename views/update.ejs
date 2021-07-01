@@ -1,0 +1,18 @@
+<!doctype html>
+<head>
+	<%- include('template/head') %>
+</head>
+<html>
+	<%- include('template/navbar') %>
+	<div class="container">
+		<form method="POST" action="/update_comments/<%= comment.id %>">
+		  <div class="mb-3 row">
+		    <div class="mb-3">
+			    <label class="form-label">編輯文章</label>
+			    <textarea name="content" class="form-control"><%= comment.content %></textarea>
+			</div>
+		  </div>
+			<button type="submit" class="btn btn-primary">送出</button>
+		</form>
+	</div>
+</html>
