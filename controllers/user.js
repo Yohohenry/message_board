@@ -47,24 +47,36 @@ const userController = {
     		req.flash('errorMessage', '缺少必要欄位')
     		return next()
     	}
-    	bcrypt.hash(password, saltRounds, function(err, hash) {
-		    if (err) {
-    			req.flash('errorMessage', err.toString())
-    			return next()
+		User.findOne({
+    		where: {
+    			username
     		}
-    		User.create({
-    			username, 
-	    		nickname, 
-	    		password: hash
-    		}).then(user => {
-    			req.session.username = username
-    			req.session.userId = user.id
-	    		res.redirect('/')
-    		}).catch(err => {
-    			req.flash('errorMessage', err.toString())
-	    		return next()
-    		})
-		});    	
+    	}).then(user => {
+			if (user) {
+	    		req.flash('errorMessage', '帳號已註冊')
+				return next()
+			}
+			bcrypt.hash(password, saltRounds, function(err, hash) {
+				if (err) {
+					req.flash('errorMessage', err.toString())
+					return next()
+				}
+				User.create({
+					username, 
+					nickname, 
+					password: hash
+				}).then(user => {
+					req.session.username = username
+					req.session.userId = user.id
+					res.redirect('/')
+				}).catch(err => {
+					req.flash('errorMessage', err.toString())
+					return next()
+				})
+			});
+		})
+    		
+    	    	
     },
     logout: (req, res) => {
 		req.session.username = null
