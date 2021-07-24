@@ -26,8 +26,12 @@
 			</div>
 				<button type="submit" class="btn btn-primary">Submit</button>
 			<div style="display: flex;">
-				<div style="margin-top: 20px; margin-right: 25px;">使用Google帳戶登入</div>
-				<div class="g-signin2" style="margin: 20px 45px;" data-onsuccess="onSignIn"></div>
+				<div style="margin-top: 20px; margin-right: 25px;">
+					<a href="/auth/google" class="btn red darken-1">
+						<i class="fab fa-google left"></i> 使用Google帳戶登入
+					</a>
+				</div>
+				
 				<a href="#" style="margin-top: 20px;" onclick="signOut();">Sign out</a>
 			</div>
 			<div>

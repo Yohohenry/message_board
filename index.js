@@ -1,7 +1,12 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const flash = require('connect-flash');
+const dotenv = require('dotenv')
 const session = require('express-session')
+const passport = require('passport')
+dotenv.config({ path: './config/config.env' })
+
+require('./config/passport')(passport)
 const app = express()
 const port = process.env.PORT || 5001
 
@@ -11,13 +16,17 @@ app.set('view engine', 'ejs')
 
 app.use(session({
   secret: 'keyboard cat',
-  resave: false,
+  resave: true,
   saveUninitialized: true
 }))
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(flash())
+
+// passport middleware
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.use((req, res, next) => {
 	res.locals.username = req.session.username
@@ -41,6 +50,9 @@ app.post('/comments', commentController.add)
 app.get('/delete_comments/:id', commentController.delete)
 app.get('/update_comments/:id', commentController.update)
 app.post('/update_comments/:id', commentController.handleUpdate)
+
+app.use(require('./controllers/index'))
+app.use('/auth', require('./controllers/auth'))
 
 app.listen(port, () => {
 	console.log(`Example app listening at http://localhost:${port}`)
