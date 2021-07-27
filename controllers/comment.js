@@ -3,7 +3,7 @@ const Comment = db.Comment
 const User = db.User
 const commentController = {
 	add: (req, res) => {
-	 	const {userId} = req.session
+	 	const {userId, } = req.session
 	 	const {content} = req.body
 	 	if (!userId || !content){
 	 		return res.redirect('/')

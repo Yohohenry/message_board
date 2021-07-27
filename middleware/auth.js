@@ -2,6 +2,7 @@ module.exports = {
     // if user is authenticated the redirected to next page else redirect to login page
     ensureAuth: function (req, res, next) {
       if (req.isAuthenticated()) {
+        // console.log('middle passport session: ', req.session.passport.user)
         return next()
       } else {
         res.redirect('/')
